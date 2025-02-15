@@ -75,7 +75,7 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
 
   if (channels.length === 0) {
     return (
-      <Card className="w-full">
+      <Card className="w-full bg-white text-black">
         <CardHeader>
           <CardTitle>Marketing Mix</CardTitle>
         </CardHeader>
@@ -92,7 +92,7 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full bg-white text-black">
       <CardHeader>
         <CardTitle>Marketing Mix</CardTitle>
       </CardHeader>
@@ -169,4 +169,3 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
     </Card>
   )
 }
-

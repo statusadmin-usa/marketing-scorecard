@@ -30,7 +30,7 @@ const CHANNEL_SUGGESTIONS = [
 ]
 
 export default function BrandProfile({ onBrandProfileChange, initialBrandProfile }: BrandProfileProps) {
-  const [profile, setProfile] = useState(initialBrandProfile)
+  const [profile, setProfile] = useState({...initialBrandProfile, companyName: "", domainUrl: ""}) // Initialize new fields
   const [newTeamMember, setNewTeamMember] = useState("")
   const [newSegment, setNewSegment] = useState("")
   const [newChannel, setNewChannel] = useState("")
@@ -68,6 +68,14 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
     }
   }
 
+  const handleCompanyNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfile(prev => ({...prev, companyName: e.target.value}))
+  }
+
+  const handleDomainUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfile(prev => ({...prev, domainUrl: e.target.value}))
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -75,6 +83,11 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
+          <div>
+            <Label htmlFor="companyName">Company Name</Label>
+            <Input id="companyName" type="text" value={profile.companyName} onChange={handleCompanyNameChange} />
+          </div>
+
           <div>
             <Label htmlFor="logo">Upload Logo (Black horizontal, preferred)</Label>
             <Input id="logo" type="file" accept="image/*" onChange={handleLogoUpload} className="mt-1" />
@@ -86,14 +99,17 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
           </div>
 
           <div>
-            <Label htmlFor="totalBudget">Total Budget</Label>
-            <Input
-              id="totalBudget"
-              type="number"
-              value={profile.totalBudget}
-              onChange={(e) => setProfile((prev) => ({ ...prev, totalBudget: Number(e.target.value) }))}
+            <Label htmlFor="domainUrl">Domain URL</Label>
+            <Input 
+              id="domainUrl" 
+              type="text" 
+              value={profile.domainUrl} 
+              onChange={handleDomainUrlChange} 
+              placeholder="www.example.com" 
+              pattern="^(?:https?:\/\/)?(?:[\w-]+\.)+[\w-]+(?:\/.*)?$" 
             />
           </div>
+
 
           {["personnel", "segments"].map((field) => (
             <div key={field}>
@@ -189,4 +205,3 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
     </Card>
   )
 }
-
