@@ -11,22 +11,23 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts"
 interface MarketingMixProps {
   totalBudget: number
   channels: string[]
+  readOnly?: boolean
 }
 
 const COLORS = [
-  "#ffffff",
-  "#f8f8f8",
-  "#e0e0e0",
-  "#c0c0c0",
-  "#a0a0a0",
-  "#808080",
-  "#606060",
-  "#404040",
-  "#202020",
   "#000000",
+  "#1a1a1a",
+  "#333333",
+  "#4d4d4d",
+  "#666666",
+  "#808080",
+  "#999999",
+  "#b3b3b3",
+  "#cccccc",
+  "#e6e6e6",
 ]
 
-export default function MarketingMixTable({ totalBudget, channels }: MarketingMixProps) {
+export default function MarketingMixTable({ totalBudget, channels, readOnly = false }: MarketingMixProps) {
   const [allocations, setAllocations] = useState(() =>
     channels.length > 0
       ? channels.reduce(
@@ -57,6 +58,8 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
   }, [channels])
 
   const handlePercentageChange = (channel: string, percentage: number) => {
+    if (readOnly) return
+
     const newPercentage = Math.min(100, Math.max(0, percentage))
     const amount = (newPercentage / 100) * totalBudget
 
@@ -64,6 +67,10 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
       ...prev,
       [channel]: { percentage: newPercentage, amount },
     }))
+  }
+
+  const formatNumber = (num: number) => {
+    return num.toLocaleString("en-US")
   }
 
   const chartData = Object.entries(allocations)
@@ -97,7 +104,7 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
         <CardTitle>Marketing Mix</CardTitle>
       </CardHeader>
       <CardContent>
-        {totalPercentage !== 100 && (
+        {!readOnly && totalPercentage !== 100 && (
           <Alert variant="destructive" className="mb-4">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>Total allocation must equal 100%. Current total: {totalPercentage}%</AlertDescription>
@@ -118,21 +125,25 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
                 <TableRow key={channel}>
                   <TableCell>{channel}</TableCell>
                   <TableCell>
-                    <Input
-                      type="number"
-                      value={allocations[channel]?.percentage || 0}
-                      onChange={(e) => handlePercentageChange(channel, Number(e.target.value))}
-                      className="w-20"
-                    />
+                    {readOnly ? (
+                      <span>{allocations[channel]?.percentage || 0}%</span>
+                    ) : (
+                      <Input
+                        type="number"
+                        value={allocations[channel]?.percentage || 0}
+                        onChange={(e) => handlePercentageChange(channel, Number(e.target.value))}
+                        className="w-20"
+                      />
+                    )}
                   </TableCell>
-                  <TableCell>${(allocations[channel]?.amount || 0).toLocaleString()}</TableCell>
+                  <TableCell>${formatNumber(allocations[channel]?.amount || 0)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
 
-          <div className="bg-black p-6 rounded-lg border">
-            <h3 className="text-white text-lg font-bold mb-4">MARKETING MIX</h3>
+          <div className="bg-white p-6 rounded-lg border">
+            <h3 className="text-black text-lg font-bold mb-4">MARKETING MIX</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -152,7 +163,7 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
                 <Tooltip />
               </PieChart>
             </ResponsiveContainer>
-            <div className="text-white space-y-2 mt-4">
+            <div className="text-black space-y-2 mt-4">
               {chartData.map((entry, index) => (
                 <div key={entry.name} className="flex items-center justify-between">
                   <span>{entry.name}</span>
