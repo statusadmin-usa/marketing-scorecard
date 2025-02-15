@@ -1,0 +1,30 @@
+change the form field "products" to another tag field type but he did for segments and personnel.
+
+Add an additional form fields to the profile section, which includes the company name (above the logo), domain URL with validation (below the logo). You can remove the industry field.
+
+Beside the domain URL field, add a button that says, "Enrich Profile" which should use sample data for now but it should link to an AI Api to search the web (using the domain) to the rest of the Brand Profile "Customer segments, Channels,  Products"
+
+for every numeric $ form field ie Costs., Budget, , place commas "," delineters every 3 numbers so it shows "1,000,000"
+
+Please invert the colors of Marketing Mix section to he white background and black text.
+
+Screenshot 2025-02-15 at 12.56.12 AM - use this for the "New Benchmark" title form field like this. It should be 100% width of the table. Also the dropdown arrow should be on the upper right side of the table. The delete button should at the bottom right of the table opposite of "Add Benchmark".
+
+For Personnel in the Benchmarks & Goals section, please allow me to add multiple tags. 
+
+For the expand notes, replace with ane expand icon that is absolute to the div of the description box.
+
+Initiatives Section:
+Name	field should be wider,
+Cost should be shorter to fit at 5 digits with a comma
+Difficulty: make this field smaller, no words. look at the image.png to see how colored filled vs empty boxes are used. 
+
+for the print PDF function, let me know if you need an API to do so and if you an atl east format a strutrued  JSON or HTTP Get for the API to thws software to be able to run.
+
+Add a view-only share function so the user can see a complted scorecard. This ådditoina page will need to list the name of the account owner at the top of the page to show who owns it. Then at the bottom should be a an ad to create your Own Scorecard. 
+
+For each Free User, you can save up to 3 Scorecards, and will need to upgrade to add more than 3. Paid members will have access to unlimited scorecards and 20 downloads a month and share link function. 
+Also, free users are limited to 3 downloads a month , but they can share a view only scorecard as stated above.
+
+
+ 

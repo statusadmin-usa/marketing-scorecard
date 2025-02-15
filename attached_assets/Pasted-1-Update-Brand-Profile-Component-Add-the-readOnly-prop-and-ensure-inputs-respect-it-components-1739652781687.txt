@@ -1,0 +1,86 @@
+1. Update Brand Profile Component
+Add the readOnly prop and ensure inputs respect it:
+
+// components/brand-profile.tsx
+interface BrandProfileProps {
+  onBrandProfileChange: (profile: any) => void
+  initialBrandProfile: any
+  readOnly?: boolean
+}
+const BrandProfile: React.FC<BrandProfileProps> = ({ onBrandProfileChange, initialBrandProfile, readOnly }) => {
+  // Other component logic...
+  return (
+    <div className="grid gap-4">
+      <div>
+        <Label htmlFor="companyName">Company Name</Label>
+        <Input id="companyName" type="text" value={initialBrandProfile.companyName} onChange={handleCompanyNameChange} readOnly={readOnly} />
+      </div>
+      {/* Additional fields... */}
+    </div>
+  );
+};
+2. Update Marketing Mix Table Component
+Integrate the readOnly functionality within input fields:
+
+// components/marketing-mix-table.tsx
+interface MarketingMixProps {
+  totalBudget: number
+  channels: string[]
+  readOnly?: boolean
+}
+const MarketingMixTable: React.FC<MarketingMixProps> = ({ totalBudget, channels, readOnly }) => {
+  return (
+    <Card className="w-full bg-white text-black">
+      <CardHeader>
+        <CardTitle>Marketing Mix</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Input
+          id="budget"
+          type="number"
+          value={budget}
+          onChange={(e) => !readOnly && setBudget(Number(e.target.value))}
+          className="w-full"
+          readOnly={readOnly}
+        />
+        {/* Additional fields... */}
+      </CardContent>
+    </Card>
+  );
+};
+3. Update Benchmarks Component
+Ensure readOnly works for benchmark fields and buttons:
+
+// components/benchmarks.tsx
+interface BenchmarksProps {
+  totalBudget: number
+  personnel: string[]
+  readOnly?: boolean
+}
+const Benchmarks: React.FC<BenchmarksProps> = ({ totalBudget, personnel, readOnly }) => {
+  return (
+    <div>
+      <Input
+        value={benchmark.title}
+        onChange={(e) => !readOnly && updateBenchmark(benchmark.id, "title", e.target.value)}
+        placeholder="Title of Goal"
+        className="text-lg font-semibold w-auto"
+        readOnly={readOnly}
+      />
+      {/* Additional buttons and logic... */}
+    </div>
+  );
+};
+4. Implement Share Logic
+Add share functionality to the marketing scorecard page:
+
+// app/marketing-scorecard.tsx
+<Button 
+  onClick={() => {
+    const shareUrl = `/share/${Date.now()}`;
+    window.open(shareUrl, '_blank');
+  }} 
+  variant="secondary"
+>
+  <Share className="mr-2 h-4 w-4" /> Share
+</Button>
