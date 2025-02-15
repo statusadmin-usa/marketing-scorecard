@@ -101,14 +101,36 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
 
           <div>
             <Label htmlFor="domainUrl">Domain URL</Label>
-            <Input 
-              id="domainUrl" 
-              type="text" 
-              value={profile.domainUrl} 
-              onChange={handleDomainUrlChange} 
-              placeholder="www.example.com" 
-              pattern="^(?:https?:\/\/)?(?:[\w-]+\.)+[\w-]+(?:\/.*)?$" 
-            />
+            <div className="flex gap-2">
+              <Input 
+                id="domainUrl" 
+                type="text" 
+                value={profile.domainUrl} 
+                onChange={handleDomainUrlChange} 
+                placeholder="www.example.com" 
+                pattern="^(?:https?:\/\/)?(?:[\w-]+\.)+[\w-]+(?:\/.*)?$" 
+              />
+              <Button 
+                onClick={() => {
+                  // Sample enrichment data - this would come from AI API in the future
+                  const enrichedData = {
+                    segments: ["Enterprise (1000+ employees)", "Mid-Market (100-999 employees)", "Tech Industry"],
+                    channels: ["Digital Advertising", "Content Marketing", "Social Media", "Email Marketing"],
+                    products: ["Cloud Infrastructure", "Security Solutions", "Data Analytics Platform"]
+                  };
+                  
+                  setProfile(prev => ({
+                    ...prev,
+                    segments: [...new Set([...prev.segments, ...enrichedData.segments])],
+                    channels: [...new Set([...prev.channels, ...enrichedData.channels])],
+                    products: [...new Set([...prev.products, ...enrichedData.products])]
+                  }));
+                }}
+                className="whitespace-nowrap"
+              >
+                Enrich Profile
+              </Button>
+            </div>
           </div>
 
 
