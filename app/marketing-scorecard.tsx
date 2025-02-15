@@ -84,7 +84,17 @@ export default function MarketingScorecard() {
       </div>
 
       <BrandProfile />
-      <MarketingMixTable />
+      <MarketingMixTable 
+        totalBudget={50000}
+        channels={[
+          "Social Media",
+          "Content Marketing",
+          "Email Marketing",
+          "SEO",
+          "Paid Advertising",
+          "Events"
+        ]} 
+      />
       <Benchmarks />
 
       <div className="flex justify-between items-center mt-6">
