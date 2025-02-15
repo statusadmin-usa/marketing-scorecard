@@ -7,30 +7,39 @@ import MarketingMixTable from "@/components/marketing-mix-table"
 import Benchmarks from "@/components/benchmarks"
 
 export default function SharedScorecard({ params }: { params: { id: string } }) {
-  // In a real implementation, you would fetch the scorecard data using the ID
-  const mockData = {
+  const sampleData = {
     owner: "John Doe",
     brandProfile: {
       companyName: "Example Corp",
-      totalBudget: 50000,
-      channels: ["Digital", "Social"],
-      personnel: ["John", "Jane"],
-      products: ["Product A"],
-      segments: ["Segment 1"],
+      totalBudget: 100000,
+      domainUrl: "example.com",
+      channels: ["Digital Marketing", "Social Media", "Content Marketing"],
+      personnel: ["Marketing Manager", "Content Writer", "Social Media Manager"],
+      products: ["Product A", "Product B"],
+      segments: ["Enterprise", "SMB"],
     },
+    benchmarks: [
+      {
+        id: "1",
+        name: "Website Traffic",
+        benchmark: 10000,
+        goal: 20000,
+        initiatives: []
+      }
+    ]
   }
 
   return (
     <div className="container mx-auto p-4 space-y-6">
       <Card className="bg-muted">
         <CardContent className="pt-6">
-          <p className="text-sm text-muted-foreground">Shared by {mockData.owner}</p>
+          <p className="text-sm text-muted-foreground">Shared by {sampleData.owner}</p>
         </CardContent>
       </Card>
 
-      <BrandProfile onBrandProfileChange={() => {}} initialBrandProfile={mockData.brandProfile} readOnly />
-      <MarketingMixTable totalBudget={mockData.brandProfile.totalBudget} channels={mockData.brandProfile.channels} readOnly />
-      <Benchmarks totalBudget={mockData.brandProfile.totalBudget} personnel={mockData.brandProfile.personnel} readOnly />
+      <BrandProfile initialBrandProfile={sampleData.brandProfile} readOnly />
+      <MarketingMixTable totalBudget={sampleData.brandProfile.totalBudget} channels={sampleData.brandProfile.channels} readOnly />
+      <Benchmarks benchmarks={sampleData.benchmarks} totalBudget={sampleData.brandProfile.totalBudget} personnel={sampleData.brandProfile.personnel} readOnly />
 
       <Card className="bg-primary text-primary-foreground">
         <CardContent className="pt-6">
