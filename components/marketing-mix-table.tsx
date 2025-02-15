@@ -48,13 +48,15 @@ export default function MarketingMixTable({ totalBudget: initialBudget, channels
   }, [allocations])
 
   useEffect(() => {
-    setAllocations((prev) => {
-      const newAllocations = channels.reduce((acc, channel) => {
-        acc[channel] = prev[channel] || { percentage: 0, amount: 0 }
-        return acc
-      }, {})
-      return newAllocations
-    })
+    if (typeof window !== 'undefined') {
+      setAllocations((prev) => {
+        const newAllocations = channels.reduce((acc, channel) => {
+          acc[channel] = prev[channel] || { percentage: 0, amount: 0 }
+          return acc
+        }, {})
+        return newAllocations
+      })
+    }
   }, [channels])
 
   const handlePercentageChange = (channel: string, percentage: number) => {
@@ -148,7 +150,7 @@ export default function MarketingMixTable({ totalBudget: initialBudget, channels
                       className="w-20"
                     />
                   </TableCell>
-                  <TableCell>${(allocations[channel]?.amount || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
+                  <TableCell>{formatCurrency(allocations[channel]?.amount || 0)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
