@@ -26,7 +26,8 @@ const COLORS = [
   "#000000",
 ]
 
-export default function MarketingMixTable({ totalBudget, channels }: MarketingMixProps) {
+export default function MarketingMixTable({ totalBudget: initialBudget, channels }: MarketingMixProps) {
+  const [budget, setBudget] = useState(initialBudget)
   const [allocations, setAllocations] = useState(() =>
     channels.length > 0
       ? channels.reduce(
@@ -97,6 +98,16 @@ export default function MarketingMixTable({ totalBudget, channels }: MarketingMi
         <CardTitle>Marketing Mix</CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="mb-4">
+          <Label htmlFor="budget">Total Marketing Budget ($)</Label>
+          <Input
+            id="budget"
+            type="number"
+            value={budget}
+            onChange={(e) => setBudget(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
         {totalPercentage !== 100 && (
           <Alert variant="destructive" className="mb-4">
             <AlertCircle className="h-4 w-4" />

@@ -100,6 +100,16 @@ export default function MarketingScorecard() {
               <Button onClick={handleLogin} variant="outline">
                 <LogIn className="mr-2 h-4 w-4" /> Log In
               </Button>
+              <Button 
+                onClick={() => {
+                  // In production, this would generate a unique URL
+                  const shareUrl = `/share/${Date.now()}`
+                  window.open(shareUrl, '_blank')
+                }} 
+                variant="secondary"
+              >
+                <Share className="mr-2 h-4 w-4" /> Share
+              </Button>
             </>
           )}
           {isLoggedIn && (
