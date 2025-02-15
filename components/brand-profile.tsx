@@ -30,10 +30,11 @@ const CHANNEL_SUGGESTIONS = [
 ]
 
 export default function BrandProfile({ onBrandProfileChange, initialBrandProfile }: BrandProfileProps) {
-  const [profile, setProfile] = useState({...initialBrandProfile, companyName: "", domainUrl: ""}) // Initialize new fields
+  const [profile, setProfile] = useState({...initialBrandProfile, companyName: "", domainUrl: "", products: []}) // Initialize new fields
   const [newTeamMember, setNewTeamMember] = useState("")
   const [newSegment, setNewSegment] = useState("")
   const [newChannel, setNewChannel] = useState("")
+  const [newProduct, setNewProduct] = useState("")
   const [logo, setLogo] = useState<string | null>(null)
 
   useEffect(() => {
@@ -185,11 +186,33 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
 
           <div>
             <Label htmlFor="products">Products</Label>
-            <Input
-              id="products"
-              value={profile.products}
-              onChange={(e) => setProfile((prev) => ({ ...prev, products: e.target.value }))}
-            />
+            <div className="flex gap-2 mb-2">
+              <Input
+                id="products"
+                value={newProduct}
+                onChange={(e) => setNewProduct(e.target.value)}
+                placeholder="Add product"
+              />
+              <Button
+                onClick={() => {
+                  addItem("products", newProduct)
+                  setNewProduct("")
+                }}
+                size="icon"
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {profile.products.map((product: string) => (
+                <Badge key={product} variant="secondary">
+                  {product}
+                  <button onClick={() => removeItem("products", product)} className="ml-2 hover:text-destructive">
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
           </div>
 
           <div>
