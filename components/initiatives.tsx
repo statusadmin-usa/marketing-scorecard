@@ -25,7 +25,7 @@ const InitiativesTable = ({ initiatives }) => (
       </tr>
     </thead>
     <tbody>
-      {initiatives.map((initiative) => (
+      {(initiatives || []).map((initiative) => (
         <tr key={initiative.id}>
           <TableCell className="w-[300px]">{initiative.name}</TableCell>
           <TableCell className="w-[80px]">${formatCurrency(initiative.cost)}</TableCell>

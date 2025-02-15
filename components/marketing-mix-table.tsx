@@ -12,6 +12,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts"
 interface MarketingMixProps {
   totalBudget: number
   channels: string[]
+  readOnly?: boolean
 }
 
 const COLORS = [
@@ -30,15 +31,13 @@ const COLORS = [
 export default function MarketingMixTable({ totalBudget: initialBudget, channels }: MarketingMixProps) {
   const [budget, setBudget] = useState(initialBudget)
   const [allocations, setAllocations] = useState(() =>
-    channels.length > 0
-      ? channels.reduce(
-          (acc, channel) => ({
-            ...acc,
-            [channel]: { percentage: 0, amount: 0 },
-          }),
-          {},
-        )
-      : {},
+    (channels || []).reduce(
+      (acc, channel) => ({
+        ...acc,
+        [channel]: { percentage: 0, amount: 0 },
+      }),
+      {},
+    )
   )
 
   const [totalPercentage, setTotalPercentage] = useState(0)

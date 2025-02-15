@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Save, LogIn, Download, Plus, Share } from "lucide-react"
+import { Save, LogIn, Download, Plus, Share2 as Share } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import BrandProfile from "../components/brand-profile"
 import MarketingMixTable from "../components/marketing-mix-table"
