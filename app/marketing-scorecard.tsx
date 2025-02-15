@@ -11,15 +11,6 @@ import { generatePDF } from "../utils/generate-pdf"
 
 export default function MarketingScorecard() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [brandProfile, setBrandProfile] = useState({
-    totalBudget: 50000,
-    personnel: [],
-    products: "",
-    industry: "",
-    segments: [],
-    channels: [],
-    logo: null,
-  })
   const [scorecards, setScorecards] = useState([
     { id: "1", name: "Scorecard 1" },
     { id: "2", name: "Scorecard 2" },
@@ -37,54 +28,25 @@ export default function MarketingScorecard() {
   }
 
   const handleDownloadPDF = () => {
-    const data = {
-      brandProfile: {
-        totalBudget: brandProfile.totalBudget,
-        personnel: brandProfile.personnel,
-        products: brandProfile.products,
-        industry: brandProfile.industry,
-        segments: brandProfile.segments,
-        channels: brandProfile.channels,
-        logo: brandProfile.logo,
-      },
-      marketingMix: {
-        // ... marketing mix data
-      },
-      benchmarks: {
-        // ... benchmarks data
-      },
-    }
-
-    generatePDF(data)
+    generatePDF({
+      brandProfile: {},
+      marketingMix: {},
+      benchmarks: {}
+    })
   }
 
   const handleSaveScorecard = () => {
-    // Logic to save the current scorecard
     alert("Scorecard saved!")
   }
 
   const handleNewScorecard = () => {
-    // Save current scorecard
     handleSaveScorecard()
-
-    // Create new scorecard
     const newScorecard = {
       id: `${scorecards.length + 1}`,
       name: `Scorecard ${scorecards.length + 1}`,
     }
     setScorecards([...scorecards, newScorecard])
     setCurrentScorecard(newScorecard.id)
-
-    // Reset form data
-    setBrandProfile({
-      totalBudget: 50000,
-      personnel: [],
-      products: "",
-      industry: "",
-      segments: [],
-      channels: [],
-      logo: null,
-    })
   }
 
   return (
@@ -102,7 +64,6 @@ export default function MarketingScorecard() {
               </Button>
               <Button 
                 onClick={() => {
-                  // In production, this would generate a unique URL
                   const shareUrl = `/share/${Date.now()}`
                   window.open(shareUrl, '_blank')
                 }} 
@@ -122,9 +83,9 @@ export default function MarketingScorecard() {
         </div>
       </div>
 
-      <BrandProfile onBrandProfileChange={setBrandProfile} initialBrandProfile={brandProfile} />
-      <MarketingMixTable totalBudget={brandProfile.totalBudget} channels={brandProfile.channels} />
-      <Benchmarks totalBudget={brandProfile.totalBudget} personnel={brandProfile.personnel} />
+      <BrandProfile />
+      <MarketingMixTable />
+      <Benchmarks />
 
       <div className="flex justify-between items-center mt-6">
         <Button onClick={handleSaveScorecard}>
@@ -140,4 +101,3 @@ export default function MarketingScorecard() {
     </div>
   )
 }
-

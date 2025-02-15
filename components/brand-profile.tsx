@@ -1,8 +1,7 @@
+
 "use client"
 
-import type React from "react"
-
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,11 +9,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Plus, X } from "lucide-react"
 import { Combobox } from "@/components/ui/combobox"
-
-interface BrandProfileProps {
-  onBrandProfileChange: (profile: any) => void
-  initialBrandProfile: any
-}
 
 const CHANNEL_SUGGESTIONS = [
   "Digital Advertising",
@@ -29,17 +23,23 @@ const CHANNEL_SUGGESTIONS = [
   "Social Media",
 ]
 
-export default function BrandProfile({ onBrandProfileChange, initialBrandProfile }: BrandProfileProps) {
-  const [profile, setProfile] = useState({...initialBrandProfile, companyName: "", domainUrl: "", products: []}) // Initialize new fields
+export default function BrandProfile() {
+  const [profile, setProfile] = useState({
+    companyName: "",
+    domainUrl: "",
+    personnel: [],
+    products: [],
+    industry: "",
+    segments: [],
+    channels: [],
+    logo: null,
+    totalBudget: 50000
+  })
   const [newTeamMember, setNewTeamMember] = useState("")
   const [newSegment, setNewSegment] = useState("")
   const [newChannel, setNewChannel] = useState("")
   const [newProduct, setNewProduct] = useState("")
   const [logo, setLogo] = useState<string | null>(null)
-
-  useEffect(() => {
-    onBrandProfileChange(profile)
-  }, [profile, onBrandProfileChange])
 
   const addItem = (field: string, item: string) => {
     if (item.trim()) {
@@ -94,7 +94,7 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
             <Input id="logo" type="file" accept="image/*" onChange={handleLogoUpload} className="mt-1" />
             {logo && (
               <div className="mt-2">
-                <img src={logo || "/placeholder.svg"} alt="Brand Logo" className="max-h-20" />
+                <img src={logo} alt="Brand Logo" className="max-h-20" />
               </div>
             )}
           </div>
@@ -112,19 +112,18 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
               />
               <Button 
                 onClick={() => {
-                  // Sample enrichment data - this would come from AI API in the future
                   const enrichedData = {
                     segments: ["Enterprise (1000+ employees)", "Mid-Market (100-999 employees)", "Tech Industry"],
                     channels: ["Digital Advertising", "Content Marketing", "Social Media", "Email Marketing"],
                     products: ["Cloud Infrastructure", "Security Solutions", "Data Analytics Platform"]
-                  };
+                  }
                   
                   setProfile(prev => ({
                     ...prev,
                     segments: [...new Set([...prev.segments, ...enrichedData.segments])],
                     channels: [...new Set([...prev.channels, ...enrichedData.channels])],
                     products: [...new Set([...prev.products, ...enrichedData.products])]
-                  }));
+                  }))
                 }}
                 className="whitespace-nowrap"
               >
@@ -132,7 +131,6 @@ export default function BrandProfile({ onBrandProfileChange, initialBrandProfile
               </Button>
             </div>
           </div>
-
 
           {["personnel", "segments"].map((field) => (
             <div key={field}>
