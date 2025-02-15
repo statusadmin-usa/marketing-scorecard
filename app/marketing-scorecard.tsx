@@ -16,6 +16,7 @@ export default function MarketingScorecard() {
     { id: "2", name: "Scorecard 2" },
   ])
   const [currentScorecard, setCurrentScorecard] = useState(null)
+  const [benchmarks, setBenchmarks] = useState([]); // Added state for benchmarks
 
   const handleSaveAndSignUp = () => {
     setIsLoggedIn(true)
@@ -48,6 +49,32 @@ export default function MarketingScorecard() {
     setScorecards([...scorecards, newScorecard])
     setCurrentScorecard(newScorecard.id)
   }
+
+  const addInitiative = (benchmarkId: string) => {
+    setBenchmarks(
+      benchmarks.map((b) =>
+        b.id === benchmarkId
+          ? {
+              ...b,
+              expanded: true,
+              initiatives: [
+                ...b.initiatives,
+                {
+                  id: "IN-" + Date.now(),
+                  name: "",
+                  cost: 0,
+                  budgetPercent: 0,
+                  difficulty: 1,
+                  personnel: [],
+                  status: "PENDING",
+                },
+              ],
+            }
+          : b,
+      ),
+    )
+  }
+
 
   return (
     <div className="container mx-auto p-4 space-y-6">
@@ -94,8 +121,9 @@ export default function MarketingScorecard() {
           "Paid Advertising",
           "Events"
         ]} 
+        onMarketingMixChange={(updatedMix) => { /* Handle marketing mix updates here */ }} // Placeholder for marketing mix update handling
       />
-      <Benchmarks />
+      <Benchmarks benchmarks={benchmarks} addInitiative={addInitiative} /> {/* Pass addInitiative function to Benchmarks */}
 
       <div className="flex justify-between items-center mt-6">
         <Button onClick={handleSaveScorecard}>

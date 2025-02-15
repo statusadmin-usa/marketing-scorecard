@@ -61,10 +61,22 @@ export default function MarketingMixTable({ totalBudget: initialBudget, channels
     const newPercentage = Math.min(100, Math.max(0, percentage))
     const amount = (newPercentage / 100) * totalBudget
 
-    setAllocations((prev) => ({
-      ...prev,
-      [channel]: { percentage: newPercentage, amount },
-    }))
+    setAllocations((prev) => {
+      const otherChannelsTotal = Object.entries(prev)
+        .filter(([key]) => key !== channel)
+        .reduce((sum, [_, data]) => sum + (data?.percentage || 0), 0)
+
+      if (otherChannelsTotal + newPercentage <= 100) {
+        return {
+          ...prev,
+          [channel]: { 
+            percentage: newPercentage, 
+            amount: Math.round(amount * 100) / 100 
+          },
+        }
+      }
+      return prev
+    })
   }
 
   const chartData = Object.entries(allocations)
@@ -136,7 +148,7 @@ export default function MarketingMixTable({ totalBudget: initialBudget, channels
                       className="w-20"
                     />
                   </TableCell>
-                  <TableCell>${(allocations[channel]?.amount || 0).toLocaleString()}</TableCell>
+                  <TableCell>${(allocations[channel]?.amount || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
