@@ -2,6 +2,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from "@/components/ui/toaster"
+import ErrorBoundary from "@/components/ui/error-boundary"
 
 export const metadata: Metadata = {
   title: 'Marketing Scorecard',
@@ -17,8 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
-        <Toaster />
+        <ErrorBoundary>
+          {children}
+          <Toaster />
+        </ErrorBoundary>
       </body>
     </html>
   )
